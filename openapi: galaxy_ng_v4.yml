@@ -1,0 +1,648 @@
+openapi: 3.0.2
+info:
+  title: GalaxyNG API version 4
+  version: '4.0'
+servers:
+  - url: 'https://api.server.test/api/galaxy-ng/v4'
+paths:
+  /:
+    summary: API root. Lists out the paths that are available
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRootResponse'
+  /plugin:
+    summary: Lists child URLS
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRootResponse'
+  /plugin/ansible:
+    summary: Lists child URLS
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRootResponse'
+  /plugin/ansible/search:
+    summary: Lists child URLS
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRootResponse'
+  /plugin/ansible/search/collection-versions:
+    summary: Search collection versions across all repos.
+    parameters: []
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-search-collection-versions-only_latest
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - all
+              - latest
+              - last_uploaded
+          in: query
+          name: show_versions
+        - schema:
+            type: array
+            enum:
+              - metadata
+              - namespace
+              - distributions
+          in: query
+          name: include_related
+  /plugin/ansible/distributions/:
+    summary: pulp ansible distributions api
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-distributions
+      responses:
+        '200':
+          description: OK
+      description: Same as current _ui/v1/distributions/ endpoint
+  /plugin/ansible/collection-remotes/:
+    summary: pulp ansible collection remotes api
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-collection-remotes
+      responses:
+        '200':
+          description: OK
+      description: Same as current _ui/v1/remotes/ endpoint.
+  '/plugin/ansible/collections/{distribution}':
+    summary: List child URLS
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-collections-distribution
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRootResponseObject'
+  '/plugin/ansible/collections/{distribution}/artifacts':
+    summary: Upload and download collection artifacts
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-collections-distribution-artifacts
+      responses:
+        '200':
+          description: OK
+      description: |-
+        Same as current content/{distribution}/v3/artifacts/collections/ endpoint.
+
+        Collections uploaded here will land in whatever repo is assigned to {distribution}, however they may go through an intermediary inbound repo to avoid locking the repo during imports.
+  '/plugin/ansible/collections/{distribution}/index':
+    summary: Collection metadata
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-collections-distribution-index
+      responses:
+        '200':
+          description: OK
+      description: 'Same as current content/{distribution}/v3/collections/ endpoint.'
+  '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}':
+    summary: Collection details
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-collections-distribution-index-namespace-name
+      responses:
+        '200':
+          description: OK
+      description: 'Same as current /content/{distro}/v3/collections/{namespace}/{name}/ endpoint.'
+  '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/':
+    summary: List of versions for a collection
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-collections-distribution-index-namespace-name-versions
+      responses:
+        '200':
+          description: OK
+      description: 'Same as current Same as current /content/{distro}/v3/collections/{namespace}/{name}/versions/ endpoint.'
+  '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/{version}':
+    summary: Details for a collection version
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-collections-distribution-index-namespace-name-versions-version
+      responses:
+        '200':
+          description: OK
+      description: 'Same as Same as current /content/{distro}/v3/collections/{namespace}/{name}/versions/{version}/ endpoint.'
+  '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/{version}/docs-blob':
+    summary: Collection version docs blob
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-collections-distribution-index-namespace-name-versions-version-docs-blob
+      responses:
+        '200':
+          description: OK
+      description: 'Same as Same as current /content/{distro}/v3/collections/{namespace}/{name}/versions/{version}/docs-blob endpoint.'
+  '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/{version}/move/{to_repo}':
+    summary: Move collection version to given repo
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-collections-distribution-index-namespace-name-versions-version-move-to_repo
+      responses:
+        '200':
+          description: OK
+      description: 'Same as Same as current /content/{distro}/v3/collections/{namespace}/{name}/versions/{version}/move/{source}/{dest} endpoint.'
+  '/plugin/ansible/collections/{distribution}/all':
+    summary: Repository sync metadata
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-collections-distribution-all
+      responses:
+        '200':
+          description: OK
+      description: 'Same as Same as current /content/{distro}/v3/collections/all/ endpoint.'
+  /plugin/ansible/namespaces/:
+    summary: List ansible namespaces
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-namespaces
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    meta:
+                      count: 0
+                    links:
+                      first: /api/automation-hub/v3/namespaces/?keywords=newsasdf&limit=10&offset=0
+                      previous: null
+                      next: null
+                      last: /api/automation-hub/v3/namespaces/?keywords=newsasdf&limit=10&offset=0
+                    data: []
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/PaginatedMeta'
+                  links:
+                    $ref: '#/components/schemas/PaginatedLinks'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NamespaceResponseObject'
+                required:
+                  - meta
+                  - links
+                  - data
+      description: 'Very similar to current namespaces api, with some modifications'
+  /plugin/ansible/imports:
+    summary: List collection imports
+    get:
+      summary: ''
+      operationId: get-plugin-ansible-imports
+      responses:
+        '200':
+          description: OK
+      description: Same as current v3/imports/collections/ endpoint.
+  /plugin/execution-environments:
+    summary: List child URLS
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRootResponse'
+  /plugin/execution-environments/search:
+    summary: Seach execution environments
+    get:
+      summary: ''
+      operationId: get-plugin-execution-environments-search
+      responses:
+        '200':
+          description: OK
+      description: TBD. This will include the ability to search EEs based on EE metadata.
+  /plugin/execution-environments/registries:
+    summary: List remote registries
+  /plugin/execution-environments/repositories:
+    summary: List of container repositories
+    get:
+      summary: ''
+      operationId: get-plugin-execution-environments-repositories
+      responses:
+        '200':
+          description: OK
+      description: Same as current /_ui/v1/execution-environments/repositories/ endpoint.
+  '/plugin/execution-environments/repositories/{base_path}/':
+    summary: Container repository details
+    get:
+      summary: ''
+      operationId: get-plugin-execution-environments-repositories-base_path
+      responses:
+        '200':
+          description: OK
+      description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path} endpoint.'
+  '/plugin/execution-environments/repositories/{base_path}/_content/history':
+    summary: Container repository history
+    get:
+      summary: ''
+      operationId: get-plugin-execution-environments-repositories-base_path-_content-history
+      responses:
+        '200':
+          description: OK
+      description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/history endpoint.'
+  '/plugin/execution-environments/repositories/{base_path}/_content/images':
+    summary: List of images in a repository
+    get:
+      summary: ''
+      operationId: get-plugin-execution-environments-repositories-base_path-_content-images
+      responses:
+        '200':
+          description: OK
+      description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/images endpoint.'
+  '/plugin/execution-environments/repositories/{base_path}/_content/images/{ref}':
+    summary: Container details for image manifest
+    get:
+      summary: ''
+      operationId: get-plugin-execution-environments-repositories-base_path-_content-images-ref
+      responses:
+        '200':
+          description: OK
+      description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/images/{ref} endpoint.'
+  '/plugin/execution-environments/repositories/{base_path}/_content/readme':
+    summary: Repository readme
+    get:
+      summary: ''
+      operationId: get-plugin-execution-environments-repositories-base_path-_content-readme
+      responses:
+        '200':
+          description: OK
+      description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/readme endpoint.'
+  /plugin/execution-environments/namespaces:
+    summary: List of container namespaces
+    get:
+      summary: ''
+      operationId: get-plugin-execution-environments-namespaces
+      responses:
+        '200':
+          description: OK
+      description: Same as current _ui/v1/execution-environments/namespaces/ endpoint.
+  /auth:
+    summary: List child URLS
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRootResponse'
+  /auth/me:
+    summary: Return information about the current user
+    get:
+      summary: ''
+      operationId: get-auth-me
+      responses:
+        '200':
+          description: OK
+      description: Same as current _ui/v1/me/ endpoint.
+  /auth/login:
+    summary: Login
+    get:
+      summary: ''
+      operationId: get-auth-login
+      responses:
+        '200':
+          description: OK
+      description: Same as current _ui/v1/auth/login/ endpoint
+  /auth/logout:
+    summary: Logout
+    get:
+      summary: ''
+      operationId: get-auth-logout
+      responses:
+        '200':
+          description: OK
+      description: Same as current _ui/v1/auth/logout/ endpoint
+  /auth/token:
+    summary: Get a token for the current user
+    get:
+      summary: ''
+      operationId: get-auth-token
+      responses:
+        '200':
+          description: OK
+      description: Same as current v3/auth/token/ endpoint.
+  /configuration:
+    summary: 'return the current app configuration, including feature flags, default upload repo and default download repo'
+    get:
+      summary: ''
+      operationId: get-configuration
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppConfiguration'
+  /groups:
+    summary: current groups api
+    get:
+      summary: ''
+      operationId: get-groups
+      responses:
+        '200':
+          description: OK
+      description: Same as current _ui/v1/groups/ endpoint
+  /users:
+    summary: current users api
+    get:
+      summary: ''
+      operationId: get-users
+      responses:
+        '200':
+          description: OK
+      description: Same as current _ui/v1/users/ endpoint.
+components:
+  schemas:
+    ApiRootResponse:
+      type: object
+      description: List of child routes
+      properties:
+        subroutes:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/ApiRootResponseObject'
+    ApiRootResponseObject:
+      type: object
+      description: Route
+      properties:
+        url:
+          type: string
+        support:
+          type: string
+          enum:
+            - tech_preview
+            - supported
+            - deprecated
+    CollectionVersionSearchObject:
+      type: object
+      description: Objects returned on collection search
+      x-examples: {}
+      properties:
+        name:
+          type: string
+        namespace:
+          type: string
+        version:
+          type: string
+        requires_ansible:
+          type: string
+        created_at:
+          type: string
+        related_fields:
+          type: object
+          properties:
+            metadata:
+              $ref: '#/components/schemas/CollectionVersionMetadata'
+            namespace:
+              $ref: '#/components/schemas/NamespaceSummary'
+            distributions:
+              type: array
+              items:
+                $ref: '#/components/schemas/CollectionVersionDistributionSummary'
+    CollectionVersionMetadata:
+      title: CollectionVersionMetadata
+      type: object
+      properties:
+        id:
+          type: string
+    CollectionVersionDistributionSummary:
+      title: CollectionVersionDistributionSummary
+      type: object
+      properties:
+        collection_url:
+          type: string
+        repository:
+          type: object
+          properties:
+            name:
+              type: string
+            pulp_id:
+              type: string
+        base_path:
+          type: string
+        name:
+          type: string
+        pulp_id:
+          type: string
+    PaginatedCollectionSearch:
+      title: PaginatedCollectionSearch
+      type: array
+      items:
+        type: object
+        properties:
+          meta:
+            $ref: '#/components/schemas/PaginatedMeta'
+          links:
+            $ref: '#/components/schemas/PaginatedLinks'
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/CollectionVersionSearchObject'
+    PaginatedMeta:
+      title: PaginatedMeta
+      type: object
+      properties:
+        count:
+          type: number
+    PaginatedLinks:
+      title: PaginatedLinks
+      type: object
+      properties:
+        first:
+          type: string
+        previous:
+          type: string
+        next:
+          type: string
+        last:
+          type: string
+    NamespaceSummary:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          id: 45
+          name: newswangerd
+          company: ''
+          email: ''
+          avatar_url: ''
+          description: ''
+          groups:
+            - id: 2
+              name: 'rh-identity-account:6269497'
+              object_permissions:
+                - change_namespace
+                - upload_to_namespace
+            - id: 5
+              name: test
+              object_permissions:
+                - change_namespace
+                - upload_to_namespace
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+          minLength: 1
+        company:
+          type: string
+        email:
+          type: string
+        avatar_url:
+          type: string
+        description:
+          type: string
+      required:
+        - id
+        - name
+        - company
+        - email
+        - avatar_url
+        - description
+    NamespaceResponseObject:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          id: 45
+          name: newswangerd
+          company: ''
+          email: ''
+          avatar_url: ''
+          description: ''
+          groups:
+            - id: 2
+              name: 'rh-identity-account:6269497'
+              object_permissions:
+                - change_namespace
+                - upload_to_namespace
+            - id: 5
+              name: test
+              object_permissions:
+                - change_namespace
+                - upload_to_namespace
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+          minLength: 1
+        company:
+          type: string
+        email:
+          type: string
+        avatar_url:
+          type: string
+        description:
+          type: string
+        groups:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/GroupPermissionsObject'
+        related_fields:
+          type: object
+          properties:
+            my_permissions:
+              type: array
+              items:
+                type: string
+      required:
+        - id
+        - name
+        - company
+        - email
+        - avatar_url
+        - description
+        - groups
+    GroupPermissionsObject:
+      description: ''
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+          minLength: 1
+        object_permissions:
+          type: array
+          items:
+            required: []
+            properties: {}
+      required:
+        - id
+        - name
+        - object_permissions
+      x-examples:
+        example-1:
+          id: 2
+          name: 'rh-identity-account:6269497'
+          object_permissions:
+            - change_namespace
+            - upload_to_namespace
+    AppConfiguration:
+      title: AppConfiguration
+      type: object
+      properties:
+        plugins:
+          type: object
+          properties:
+            execution_environment:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                configuration:
+                  type: object
+                  properties:
+                    registry_url:
+                      type: string
+            ansible:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                configuration:
+                  type: object
+                  properties:
+                    default_upload_distribution:
+                      type: string
+                    default_download_distribution:
+                      type: string
+        authentication:
+          type: string
+  responses: {}
+  parameters: {}
