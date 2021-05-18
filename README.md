@@ -1,0 +1,1 @@
+[View the v4 api spec here](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/ansible/galaxy-api/master/openapi/openapi.yaml)
