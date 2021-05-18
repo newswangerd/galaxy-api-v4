@@ -155,10 +155,6 @@ paths:
           items:
             type: string
             enum:
-            - -collection
-            - -namespace
-            - -pulp_created
-            - -version
             - collection
             - namespace
             - pulp_created

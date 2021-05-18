@@ -47,30 +47,31 @@ paths:
                 $ref: '#/components/schemas/ApiRootResponse'
   /plugin/ansible/search/collection-versions:
     summary: Search collection versions across all repos.
-    parameters: []
     get:
       summary: ''
-      operationId: get-plugin-ansible-search-collection-versions-only_latest
+      operationId: get-plugin-ansible-search-collection-versions
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCollectionSearch'
       parameters:
-        - schema:
-            type: string
-            enum:
-              - all
-              - latest
-              - last_uploaded
+        - schema: {}
+          in: query
+          name: includ_related
+          description: 'This should be an array, but swagger crashes '
+        - schema: {}
           in: query
           name: show_versions
+          description: 'This should be an array, but swagger crashes '
         - schema:
-            type: array
-            enum:
-              - metadata
-              - namespace
-              - distributions
+            type: string
           in: query
-          name: include_related
+          name: repo_labels
+          description: Show only content from repos that match the given pulp object labels
+      description: 'By default, only repos that are labelled with content=public are shown.'
   /plugin/ansible/distributions/:
     summary: pulp ansible distributions api
     get:
@@ -213,6 +214,7 @@ paths:
                   - links
                   - data
       description: 'Very similar to current namespaces api, with some modifications'
+      parameters: []
   /plugin/ansible/imports:
     summary: List collection imports
     get:
