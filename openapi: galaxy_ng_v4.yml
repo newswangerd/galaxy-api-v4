@@ -15,6 +15,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiRootResponse'
+      tags:
+        - API Root
   /plugin:
     summary: Lists child URLS
     get:
@@ -25,6 +27,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiRootResponse'
+      tags:
+        - Plugins
   /plugin/ansible:
     summary: Lists child URLS
     get:
@@ -35,6 +39,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiRootResponse'
+      tags:
+        - Pulp Ansible
   /plugin/ansible/search:
     summary: Lists child URLS
     get:
@@ -45,6 +51,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiRootResponse'
+      tags:
+        - Pulp Ansible
   /plugin/ansible/search/collection-versions:
     summary: Search collection versions across all repos.
     get:
@@ -71,7 +79,14 @@ paths:
           in: query
           name: repo_labels
           description: Show only content from repos that match the given pulp object labels
+        - schema:
+            type: string
+          in: query
+          name: repo
+          description: Show content from a specific repository.
       description: 'By default, only repos that are labelled with content=public are shown.'
+      tags:
+        - Pulp Ansible
   /plugin/ansible/distributions/:
     summary: pulp ansible distributions api
     get:
@@ -81,6 +96,8 @@ paths:
         '200':
           description: OK
       description: Same as current _ui/v1/distributions/ endpoint
+      tags:
+        - Pulp Ansible
   /plugin/ansible/collection-remotes/:
     summary: pulp ansible collection remotes api
     get:
@@ -90,6 +107,8 @@ paths:
         '200':
           description: OK
       description: Same as current _ui/v1/remotes/ endpoint.
+      tags:
+        - Pulp Ansible
   '/plugin/ansible/collections/{distribution}':
     summary: List child URLS
     get:
@@ -102,6 +121,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiRootResponseObject'
+      tags:
+        - Pulp Ansible
   '/plugin/ansible/collections/{distribution}/artifacts':
     summary: Upload and download collection artifacts
     get:
@@ -114,6 +135,8 @@ paths:
         Same as current content/{distribution}/v3/artifacts/collections/ endpoint.
 
         Collections uploaded here will land in whatever repo is assigned to {distribution}, however they may go through an intermediary inbound repo to avoid locking the repo during imports.
+      tags:
+        - Pulp Ansible
   '/plugin/ansible/collections/{distribution}/index':
     summary: Collection metadata
     get:
@@ -123,6 +146,8 @@ paths:
         '200':
           description: OK
       description: 'Same as current content/{distribution}/v3/collections/ endpoint.'
+      tags:
+        - Pulp Ansible
   '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}':
     summary: Collection details
     get:
@@ -132,6 +157,8 @@ paths:
         '200':
           description: OK
       description: 'Same as current /content/{distro}/v3/collections/{namespace}/{name}/ endpoint.'
+      tags:
+        - Pulp Ansible
   '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/':
     summary: List of versions for a collection
     get:
@@ -141,6 +168,8 @@ paths:
         '200':
           description: OK
       description: 'Same as current Same as current /content/{distro}/v3/collections/{namespace}/{name}/versions/ endpoint.'
+      tags:
+        - Pulp Ansible
   '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/{version}':
     summary: Details for a collection version
     get:
@@ -150,6 +179,8 @@ paths:
         '200':
           description: OK
       description: 'Same as Same as current /content/{distro}/v3/collections/{namespace}/{name}/versions/{version}/ endpoint.'
+      tags:
+        - Pulp Ansible
   '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/{version}/docs-blob':
     summary: Collection version docs blob
     get:
@@ -159,6 +190,8 @@ paths:
         '200':
           description: OK
       description: 'Same as Same as current /content/{distro}/v3/collections/{namespace}/{name}/versions/{version}/docs-blob endpoint.'
+      tags:
+        - Pulp Ansible
   '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/{version}/move/{to_repo}':
     summary: Move collection version to given repo
     get:
@@ -168,6 +201,8 @@ paths:
         '200':
           description: OK
       description: 'Same as Same as current /content/{distro}/v3/collections/{namespace}/{name}/versions/{version}/move/{source}/{dest} endpoint.'
+      tags:
+        - Pulp Ansible
   '/plugin/ansible/collections/{distribution}/all':
     summary: Repository sync metadata
     get:
@@ -177,6 +212,8 @@ paths:
         '200':
           description: OK
       description: 'Same as Same as current /content/{distro}/v3/collections/all/ endpoint.'
+      tags:
+        - Pulp Ansible
   /plugin/ansible/namespaces/:
     summary: List ansible namespaces
     get:
@@ -215,6 +252,8 @@ paths:
                   - data
       description: 'Very similar to current namespaces api, with some modifications'
       parameters: []
+      tags:
+        - Pulp Ansible
   /plugin/ansible/imports:
     summary: List collection imports
     get:
@@ -224,6 +263,8 @@ paths:
         '200':
           description: OK
       description: Same as current v3/imports/collections/ endpoint.
+      tags:
+        - Pulp Ansible
   /plugin/execution-environments:
     summary: List child URLS
     get:
@@ -234,6 +275,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiRootResponse'
+      tags:
+        - Pulp Container
   /plugin/execution-environments/search:
     summary: Seach execution environments
     get:
@@ -243,6 +286,8 @@ paths:
         '200':
           description: OK
       description: TBD. This will include the ability to search EEs based on EE metadata.
+      tags:
+        - Pulp Container
   /plugin/execution-environments/registries:
     summary: List remote registries
   /plugin/execution-environments/repositories:
@@ -254,6 +299,8 @@ paths:
         '200':
           description: OK
       description: Same as current /_ui/v1/execution-environments/repositories/ endpoint.
+      tags:
+        - Pulp Container
   '/plugin/execution-environments/repositories/{base_path}/':
     summary: Container repository details
     get:
@@ -263,6 +310,8 @@ paths:
         '200':
           description: OK
       description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path} endpoint.'
+      tags:
+        - Pulp Container
   '/plugin/execution-environments/repositories/{base_path}/_content/history':
     summary: Container repository history
     get:
@@ -272,6 +321,8 @@ paths:
         '200':
           description: OK
       description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/history endpoint.'
+      tags:
+        - Pulp Container
   '/plugin/execution-environments/repositories/{base_path}/_content/images':
     summary: List of images in a repository
     get:
@@ -281,6 +332,8 @@ paths:
         '200':
           description: OK
       description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/images endpoint.'
+      tags:
+        - Pulp Container
   '/plugin/execution-environments/repositories/{base_path}/_content/images/{ref}':
     summary: Container details for image manifest
     get:
@@ -290,6 +343,8 @@ paths:
         '200':
           description: OK
       description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/images/{ref} endpoint.'
+      tags:
+        - Pulp Container
   '/plugin/execution-environments/repositories/{base_path}/_content/readme':
     summary: Repository readme
     get:
@@ -299,6 +354,8 @@ paths:
         '200':
           description: OK
       description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/readme endpoint.'
+      tags:
+        - Pulp Container
   /plugin/execution-environments/namespaces:
     summary: List of container namespaces
     get:
@@ -308,6 +365,8 @@ paths:
         '200':
           description: OK
       description: Same as current _ui/v1/execution-environments/namespaces/ endpoint.
+      tags:
+        - Pulp Container
   /auth:
     summary: List child URLS
     get:
@@ -318,6 +377,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiRootResponse'
+      tags:
+        - Authentication
   /auth/me:
     summary: Return information about the current user
     get:
@@ -327,6 +388,8 @@ paths:
         '200':
           description: OK
       description: Same as current _ui/v1/me/ endpoint.
+      tags:
+        - Authentication
   /auth/login:
     summary: Login
     get:
@@ -336,6 +399,8 @@ paths:
         '200':
           description: OK
       description: Same as current _ui/v1/auth/login/ endpoint
+      tags:
+        - Authentication
   /auth/logout:
     summary: Logout
     get:
@@ -345,6 +410,8 @@ paths:
         '200':
           description: OK
       description: Same as current _ui/v1/auth/logout/ endpoint
+      tags:
+        - Authentication
   /auth/token:
     summary: Get a token for the current user
     get:
@@ -354,6 +421,8 @@ paths:
         '200':
           description: OK
       description: Same as current v3/auth/token/ endpoint.
+      tags:
+        - Authentication
   /configuration:
     summary: 'return the current app configuration, including feature flags, default upload repo and default download repo'
     get:
@@ -366,6 +435,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AppConfiguration'
+      tags:
+        - App Configuration
   /groups:
     summary: current groups api
     get:
@@ -375,6 +446,8 @@ paths:
         '200':
           description: OK
       description: Same as current _ui/v1/groups/ endpoint
+      tags:
+        - Groups
   /users:
     summary: current users api
     get:
@@ -384,6 +457,8 @@ paths:
         '200':
           description: OK
       description: Same as current _ui/v1/users/ endpoint.
+      tags:
+        - Users
 components:
   schemas:
     ApiRootResponse:
