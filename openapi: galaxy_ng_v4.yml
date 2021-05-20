@@ -262,6 +262,16 @@ paths:
         name: name
         in: path
         required: true
+    get:
+      summary: ''
+      operationId: get-plugins-ansible-namespaces-name
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespaceResponseObject'
   '/plugins/ansible/namespaces/{name}/users':
     parameters:
       - schema:
@@ -473,13 +483,11 @@ paths:
       description: Same as current _ui/v1/execution-environments/namespaces/ endpoint.
       tags:
         - Pulp Container
-  '/plugin/execution-environments/namespaces/{name}':
-    summary: Container namespace details
   '/plugin/execution-environments/namespaces/{name}/users':
     summary: List of container namespace users
     get:
       summary: ''
-      operationId: get-plugins-ansible-namespaces-name-users
+      operationId: get-plugins-execution-environments-namespaces-name-users
       responses:
         '200':
           description: OK
@@ -491,7 +499,7 @@ paths:
         - Pulp Container
     put:
       summary: ''
-      operationId: post-plugins-ansible-namespaces-name-users
+      operationId: put-plugins-execution-environments-namespaces-name-users
       responses:
         '200':
           description: OK
@@ -506,7 +514,7 @@ paths:
         - Pulp Container
     delete:
       summary: ''
-      operationId: delete-plugins-ansible-namespaces-name-users
+      operationId: delete-plugins-execution-environments-namespaces-name-users
       responses:
         '200':
           description: OK
@@ -523,7 +531,7 @@ paths:
     summary: List of container namespace groups
     get:
       summary: ''
-      operationId: get-plugins-ansible-namespaces-name-users
+      operationId: get-plugins-execution-environments-namespaces-name-groups
       responses:
         '200':
           description: OK
@@ -535,7 +543,7 @@ paths:
         - Pulp Container
     put:
       summary: ''
-      operationId: post-plugins-ansible-namespaces-name-users
+      operationId: put-plugins-execution-environments-namespaces-name-groups
       responses:
         '200':
           description: OK
@@ -550,7 +558,7 @@ paths:
         - Pulp Container
     delete:
       summary: ''
-      operationId: delete-plugins-ansible-namespaces-name-users
+      operationId: delete-plugins-execution-environments-namespaces-name-groups
       responses:
         '200':
           description: OK
@@ -840,12 +848,6 @@ components:
           type: string
         description:
           type: string
-        groups:
-          type: array
-          uniqueItems: true
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/ObjectPermissionsObject'
         related_fields:
           type: object
           properties:
@@ -860,7 +862,6 @@ components:
         - email
         - avatar_url
         - description
-        - groups
     ObjectPermissionsObject:
       description: ''
       type: object
