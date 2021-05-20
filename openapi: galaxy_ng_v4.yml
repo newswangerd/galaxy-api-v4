@@ -214,7 +214,7 @@ paths:
       description: 'Same as Same as current /content/{distro}/v3/collections/all/ endpoint.'
       tags:
         - Pulp Ansible
-  /plugin/ansible/namespaces/:
+  /plugin/ansible/namespaces:
     summary: List ansible namespaces
     get:
       summary: ''
@@ -252,6 +252,112 @@ paths:
                   - data
       description: 'Very similar to current namespaces api, with some modifications'
       parameters: []
+      tags:
+        - Pulp Ansible
+    parameters: []
+  '/plugins/ansible/namespaces/{name}':
+    parameters:
+      - schema:
+          type: string
+        name: name
+        in: path
+        required: true
+  '/plugins/ansible/namespaces/{name}/users':
+    parameters:
+      - schema:
+          type: string
+        name: name
+        in: path
+        required: true
+    get:
+      summary: ''
+      operationId: get-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedObjectPermissionsResponse'
+      tags:
+        - Pulp Ansible
+    put:
+      summary: ''
+      operationId: post-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ObjectPermissionsObject'
+      description: List of object permissions to add or change. Users that are already added on the object will have their permissions updated. Users that don't already have permissions will be added.
+      tags:
+        - Pulp Ansible
+    delete:
+      summary: ''
+      operationId: delete-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      description: List of user IDs to remove from the object.
+      tags:
+        - Pulp Ansible
+  '/plugins/ansible/namespaces/{name}/groups':
+    parameters:
+      - schema:
+          type: string
+        name: name
+        in: path
+        required: true
+    get:
+      summary: ''
+      operationId: get-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedObjectPermissionsResponse'
+      tags:
+        - Pulp Ansible
+    put:
+      summary: ''
+      operationId: post-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ObjectPermissionsObject'
+      description: List of object permissions to add or change. Groups that are already added on the object will have their permissions updated. Groups that don't already have permissions will be added.
+      tags:
+        - Pulp Ansible
+    delete:
+      summary: ''
+      operationId: delete-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      description: List of group IDs to remove from the object.
       tags:
         - Pulp Ansible
   /plugin/ansible/imports:
@@ -365,6 +471,96 @@ paths:
         '200':
           description: OK
       description: Same as current _ui/v1/execution-environments/namespaces/ endpoint.
+      tags:
+        - Pulp Container
+  '/plugin/execution-environments/namespaces/{name}':
+    summary: Container namespace details
+  '/plugin/execution-environments/namespaces/{name}/users':
+    summary: List of container namespace users
+    get:
+      summary: ''
+      operationId: get-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedObjectPermissionsResponse'
+      tags:
+        - Pulp Container
+    put:
+      summary: ''
+      operationId: post-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ObjectPermissionsObject'
+      description: List of object permissions to add or change. Users that are already added on the object will have their permissions updated. Users that don't already have permissions will be added.
+      tags:
+        - Pulp Container
+    delete:
+      summary: ''
+      operationId: delete-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      description: List of user IDs to remove from the object.
+      tags:
+        - Pulp Container
+  '/plugin/execution-environments/namespaces/{name}/groups':
+    summary: List of container namespace groups
+    get:
+      summary: ''
+      operationId: get-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedObjectPermissionsResponse'
+      tags:
+        - Pulp Container
+    put:
+      summary: ''
+      operationId: post-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ObjectPermissionsObject'
+      description: List of object permissions to add or change. Groups that are already added on the object will have their permissions updated. Groups that don't already have permissions will be added.
+      tags:
+        - Pulp Container
+    delete:
+      summary: ''
+      operationId: delete-plugins-ansible-namespaces-name-users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      description: List of group IDs to remove from the object.
       tags:
         - Pulp Container
   /auth:
@@ -649,7 +845,7 @@ components:
           uniqueItems: true
           minItems: 1
           items:
-            $ref: '#/components/schemas/GroupPermissionsObject'
+            $ref: '#/components/schemas/ObjectPermissionsObject'
         related_fields:
           type: object
           properties:
@@ -665,7 +861,7 @@ components:
         - avatar_url
         - description
         - groups
-    GroupPermissionsObject:
+    ObjectPermissionsObject:
       description: ''
       type: object
       properties:
@@ -721,5 +917,17 @@ components:
                       type: string
         authentication:
           type: string
+    PaginatedObjectPermissionsResponse:
+      title: PaginatedObjectPermissionsResponse
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/PaginatedMeta'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectPermissionsObject'
   responses: {}
   parameters: {}
