@@ -180,31 +180,6 @@ paths:
           description: No response body
       tags:
         - Pulp Ansible
-  /auth/token/:
-    post:
-      operationId: api_automation_hub_v3_auth_token_post
-      description: Create or refresh user token.
-      tags:
-        - 'Api: Automation-Hub V3 Token'
-      security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
-      responses:
-        '200':
-          description: No response body
-    delete:
-      operationId: api_automation_hub_v3_auth_token_delete
-      description: Invalidate user token.
-      tags:
-        - 'Api: Automation-Hub V3 Token'
-      security:
-        - basicAuth: []
-        - cookieAuth: []
-        - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
   '/plugin/ansible/collections/{distribution}/index/':
     get:
       operationId: api_automation_hub_v3_collections_list
@@ -308,7 +283,7 @@ paths:
             type: string
           required: true
       tags:
-        - 'Api: Automation-Hub Collections'
+        - 'Pulp Ansible'
       requestBody:
         content:
           application/json:
@@ -1213,6 +1188,30 @@ paths:
       description: Same as current v3/auth/token/ endpoint.
       tags:
         - Authentication
+    post:
+      operationId: api_automation_hub_v3_auth_token_post
+      description: Create or refresh user token.
+      tags:
+        - Authentication
+      security:
+        - basicAuth: []
+        - cookieAuth: []
+        - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: api_automation_hub_v3_auth_token_delete
+      description: Invalidate user token.
+      tags:
+        - Authentication
+      security:
+        - basicAuth: []
+        - cookieAuth: []
+        - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /configuration:
     summary: 'return the current app configuration, including feature flags, default upload repo and default download repo'
     get:
