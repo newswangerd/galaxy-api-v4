@@ -1250,7 +1250,7 @@ paths:
         - Users
   /collections:
     get:
-      summary: Your GET endpoint
+      summary: Get Collections
       tags: []
       responses:
         '301':
@@ -1260,7 +1260,7 @@ paths:
       deprecated: true
   /artifacts:
     get:
-      summary: Your GET endpoint
+      summary: Get collection artifacts
       tags: []
       responses:
         '301':
@@ -1270,7 +1270,7 @@ paths:
       deprecated: true
   /namespaces:
     get:
-      summary: Your GET endpoint
+      summary: Get collection namespaces
       tags: []
       responses:
         '301':
@@ -1280,7 +1280,7 @@ paths:
       deprecated: true
   /imports:
     get:
-      summary: Your GET endpoint
+      summary: Get collection imports
       tags: []
       responses:
         '301':
