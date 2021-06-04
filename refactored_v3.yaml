@@ -283,7 +283,7 @@ paths:
             type: string
           required: true
       tags:
-        - 'Pulp Ansible'
+        - Pulp Ansible
       requestBody:
         content:
           application/json:
@@ -1278,6 +1278,15 @@ paths:
       operationId: get-namespaces
       description: Redirect or proxy the request to /plugin/ansible/namespaces/
       deprecated: true
+  /imports:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '301':
+          description: Moved Permanently
+      operationId: get-imports
+      description: Redirect or proxy the request to /plugin/ansible/imports/
 components:
   schemas:
     ApiRootResponse:
