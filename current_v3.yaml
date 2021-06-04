@@ -1,0 +1,2261 @@
+openapi: 3.0.3
+info:
+  title: Automation Hub API
+  version: v3
+  description: Fetch, Upload, Organize, and Distribute Ansible Collections
+  contact:
+    name: Pulp Team
+    email: pulp-list@redhat.com
+    url: https://pulpproject.org
+  license:
+    name: GPLv2+
+    url: https://raw.githubusercontent.com/ansible/galaxy_ng/master/LICENSE
+  x-logo:
+    url: https://pulp.plan.io/attachments/download/517478/pulp_logo_word_rectangle.svg
+  x-pulp-app-versions:
+    core: 3.11.0.post0
+    container: 2.5.2
+    ansible: 0.7.1
+    galaxy: 4.4.0dev
+paths:
+  /api/automation-hub/:
+    get:
+      operationId: api_automation_hub_get
+      description: ''
+      tags:
+      - 'Api: Automation-Hub'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/automation-hub/api/:
+    get:
+      operationId: api_automation_hub_api_get
+      description: ''
+      tags:
+      - 'Api: Api'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/automation-hub/content/{path}/:
+    get:
+      operationId: api_automation_hub_content_get
+      description: ''
+      parameters:
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Content'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/automation-hub/content/{path}/api/:
+    get:
+      operationId: api_automation_hub_content_api_get
+      description: ''
+      parameters:
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Api'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/automation-hub/content/{path}/v3/artifacts/collections/:
+    post:
+      operationId: api_automation_hub_content_v3_artifacts_collections_create
+      description: Dispatch a Collection creation task.
+      parameters:
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - 'Api: Automation-Hub Content V3 Collections'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CollectionUploadWithDownloadUrl'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CollectionUploadWithDownloadUrl'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionUploadWithDownloadUrlResponse'
+          description: ''
+  /api/automation-hub/content/{path}/v3/artifacts/collections/{path}/{filename}:
+    get:
+      operationId: api_automation_hub_content_v3_artifacts_collections_read
+      description: ''
+      parameters:
+      - in: path
+        name: filename
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Content V3 Collections'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/automation-hub/content/{path}/v3/collections/:
+    get:
+      operationId: api_automation_hub_content_v3_collections_list
+      description: ViewSet for Collections.
+      parameters:
+      - in: query
+        name: deprecated
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: namespace
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Content Collections'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCollectionWithFixedHrefsResponseList'
+          description: ''
+  /api/automation-hub/content/{path}/v3/collections/{namespace}/{name}/:
+    get:
+      operationId: api_automation_hub_content_v3_collections_read
+      description: ViewSet for Collections.
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Content Collections'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionWithFixedHrefsResponse'
+          description: ''
+    patch:
+      operationId: api_automation_hub_content_v3_collections_update
+      description: Update a Collection object.
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - 'Api: Automation-Hub Content Collections'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCollectionWithFixedHrefs'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCollectionWithFixedHrefs'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCollectionWithFixedHrefs'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionWithFixedHrefsResponse'
+          description: ''
+  /api/automation-hub/content/{path}/v3/collections/{namespace}/{name}/versions/:
+    get:
+      operationId: api_automation_hub_content_v3_collections_versions_list
+      description: Returns paginated CollectionVersions list.
+      parameters:
+      - in: query
+        name: is_highest
+        schema:
+          type: boolean
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: namespace
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: q
+        schema:
+          type: string
+      - in: query
+        name: repository_version
+        schema:
+          type: string
+        description: Repository Version referenced by HREF
+      - in: query
+        name: repository_version_added
+        schema:
+          type: string
+        description: Repository Version referenced by HREF
+      - in: query
+        name: repository_version_removed
+        schema:
+          type: string
+        description: Repository Version referenced by HREF
+      - in: query
+        name: tags
+        schema:
+          type: string
+        description: Filter by comma separate list of tags that must all be matched
+      - in: query
+        name: version
+        schema:
+          type: string
+        description: Filter results where version matches value
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Content V3 Versions'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCollectionVersionWithDownloadUrlResponseList'
+          description: ''
+  /api/automation-hub/content/{path}/v3/collections/{namespace}/{name}/versions/{version}/:
+    get:
+      operationId: api_automation_hub_content_v3_collections_versions_read
+      description: Returns a CollectionVersion object.
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: version
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Content V3 Versions'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionVersionWithDownloadUrlResponse'
+          description: ''
+  /api/automation-hub/content/{path}/v3/collections/{namespace}/{name}/versions/{version}/docs-blob/:
+    get:
+      operationId: api_automation_hub_content_v3_collections_versions_docs_blob_read
+      description: Returns a CollectionVersion object.
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: version
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Content V3 Collections Docs-Blob'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionVersionDocsResponse'
+          description: ''
+  /api/automation-hub/content/{path}/v3/collections/{namespace}/{name}/versions/{version}/move/{source_path}/{dest_path}/:
+    post:
+      operationId: api_automation_hub_content_v3_collections_versions_move_move_content
+      description: |-
+        Remove content from source repo and add to destination repo.
+
+        Creates new RepositoryVersion of source repo without content included.
+        Creates new RepositoryVersion of destination repo with content included.
+      parameters:
+      - in: path
+        name: dest_path
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: source_path
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: version
+        schema:
+          type: string
+        required: true
+      tags:
+      - 'Api: Automation-Hub Content V3 Collections Move'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/automation-hub/content/{path}/v3/sync/:
+    post:
+      operationId: api_automation_hub_content_v3_sync_sync
+      description: ''
+      parameters:
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - 'Api: Automation-Hub Content Sync'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/automation-hub/content/{path}/v3/sync/config/:
+    get:
+      operationId: api_automation_hub_content_v3_sync_config_read
+      description: ''
+      parameters:
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Content V3 Config'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ansible.CollectionRemoteResponse'
+          description: ''
+    put:
+      operationId: api_automation_hub_content_v3_sync_config_update
+      description: ''
+      parameters:
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      tags:
+      - 'Api: Automation-Hub Content V3 Config'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ansible.CollectionRemote'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ansible.CollectionRemote'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ansible.CollectionRemote'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ansible.CollectionRemoteResponse'
+          description: ''
+  /api/automation-hub/v3/artifacts/collections/:
+    post:
+      operationId: api_automation_hub_v3_artifacts_collections_create
+      description: Dispatch a Collection creation task.
+      tags:
+      - 'Api: Automation-Hub V3 Collections'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CollectionUploadWithDownloadUrl'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CollectionUploadWithDownloadUrl'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionUploadWithDownloadUrlResponse'
+          description: ''
+  /api/automation-hub/v3/artifacts/collections/{path}/{filename}:
+    get:
+      operationId: api_automation_hub_v3_artifacts_collections_read
+      description: ''
+      parameters:
+      - in: path
+        name: filename
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: path
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub V3 Collections'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/automation-hub/v3/auth/token/:
+    post:
+      operationId: api_automation_hub_v3_auth_token_post
+      description: Create or refresh user token.
+      tags:
+      - 'Api: Automation-Hub V3 Token'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: api_automation_hub_v3_auth_token_delete
+      description: Invalidate user token.
+      tags:
+      - 'Api: Automation-Hub V3 Token'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/automation-hub/v3/collections/:
+    get:
+      operationId: api_automation_hub_v3_collections_list
+      description: ViewSet for Collections.
+      parameters:
+      - in: query
+        name: deprecated
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: namespace
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Collections'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCollectionWithFixedHrefsResponseList'
+          description: ''
+  /api/automation-hub/v3/collections/{namespace}/{name}/:
+    get:
+      operationId: api_automation_hub_v3_collections_read
+      description: ViewSet for Collections.
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Collections'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionWithFixedHrefsResponse'
+          description: ''
+    patch:
+      operationId: api_automation_hub_v3_collections_update
+      description: Update a Collection object.
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      tags:
+      - 'Api: Automation-Hub Collections'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCollectionWithFixedHrefs'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCollectionWithFixedHrefs'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCollectionWithFixedHrefs'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionWithFixedHrefsResponse'
+          description: ''
+  /api/automation-hub/v3/collections/{namespace}/{name}/versions/:
+    get:
+      operationId: api_automation_hub_v3_collections_versions_list
+      description: Returns paginated CollectionVersions list.
+      parameters:
+      - in: query
+        name: is_highest
+        schema:
+          type: boolean
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: namespace
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: query
+        name: q
+        schema:
+          type: string
+      - in: query
+        name: repository_version
+        schema:
+          type: string
+        description: Repository Version referenced by HREF
+      - in: query
+        name: repository_version_added
+        schema:
+          type: string
+        description: Repository Version referenced by HREF
+      - in: query
+        name: repository_version_removed
+        schema:
+          type: string
+        description: Repository Version referenced by HREF
+      - in: query
+        name: tags
+        schema:
+          type: string
+        description: Filter by comma separate list of tags that must all be matched
+      - in: query
+        name: version
+        schema:
+          type: string
+        description: Filter results where version matches value
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub V3 Versions'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCollectionVersionWithDownloadUrlResponseList'
+          description: ''
+  /api/automation-hub/v3/collections/{namespace}/{name}/versions/{version}/:
+    get:
+      operationId: api_automation_hub_v3_collections_versions_read
+      description: Returns a CollectionVersion object.
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: version
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub V3 Versions'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionVersionWithDownloadUrlResponse'
+          description: ''
+  /api/automation-hub/v3/collections/{namespace}/{name}/versions/{version}/docs-blob/:
+    get:
+      operationId: api_automation_hub_v3_collections_versions_docs_blob_read
+      description: Returns a CollectionVersion object.
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: version
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub V3 Collections Docs-Blob'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionVersionDocsResponse'
+          description: ''
+  /api/automation-hub/v3/collections/{namespace}/{name}/versions/{version}/move/{source_path}/{dest_path}/:
+    post:
+      operationId: api_automation_hub_v3_collections_versions_move_move_content
+      description: |-
+        Remove content from source repo and add to destination repo.
+
+        Creates new RepositoryVersion of source repo without content included.
+        Creates new RepositoryVersion of destination repo with content included.
+      parameters:
+      - in: path
+        name: dest_path
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: namespace
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: source_path
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: version
+        schema:
+          type: string
+        required: true
+      tags:
+      - 'Api: Automation-Hub V3 Collections Move'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/automation-hub/v3/namespaces/:
+    get:
+      operationId: api_automation_hub_v3_namespaces_list
+      description: ''
+      summary: List namespaces
+      parameters:
+      - in: query
+        name: company
+        schema:
+          type: string
+      - in: query
+        name: keywords
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: query
+        name: sort
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - -company
+            - -id
+            - -name
+            - company
+            - id
+            - name
+        description: Ordering
+        explode: false
+        style: form
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Namespaces'
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedNamespaceSummaryResponseList'
+          description: ''
+    post:
+      operationId: api_automation_hub_v3_namespaces_create
+      description: Override to validate for name duplication before serializer validation.
+      summary: Create a namespace
+      tags:
+      - 'Api: Automation-Hub Namespaces'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Namespace'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Namespace'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Namespace'
+        required: true
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespaceResponse'
+          description: ''
+  /api/automation-hub/v3/openapi.json:
+    get:
+      operationId: api_automation_hub_v3_openapi.json_get
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - th
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - vi
+          - zh-hans
+          - zh-hant
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Openapi.Json'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/automation-hub/v3/openapi.yaml:
+    get:
+      operationId: api_automation_hub_v3_openapi.yaml_get
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - th
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - vi
+          - zh-hans
+          - zh-hant
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - 'Api: Automation-Hub Openapi.Yaml'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/automation-hub/v3/tasks/:
+    get:
+      operationId: tasks_list
+      description: |-
+        A customized named ModelViewSet that knows how to register itself with the Pulp API router.
+
+        This viewset is discoverable by its name.
+        "Normal" Django Models and Master/Detail models are supported by the ``register_with`` method.
+
+        Attributes:
+            lookup_field (str): The name of the field by which an object should be looked up, in
+                addition to any parent lookups if this ViewSet is nested. Defaults to 'pk'
+            endpoint_name (str): The name of the final path segment that should identify the ViewSet's
+                collection endpoint.
+            nest_prefix (str): Optional prefix under which this ViewSet should be nested. This must
+                correspond to the "parent_prefix" of a router with rest_framework_nested.NestedMixin.
+                None indicates this ViewSet should not be nested.
+            parent_lookup_kwargs (dict): Optional mapping of key names that would appear in self.kwargs
+                to django model filter expressions that can be used with the corresponding value from
+                self.kwargs, used only by a nested ViewSet to filter based on the parent object's
+                identity.
+            schema (DefaultSchema): The schema class to use by default in a viewset.
+      summary: List tasks
+      parameters:
+      - in: query
+        name: child_tasks
+        schema:
+          type: string
+          format: uuid
+        description: Foreign Key referenced by HREF
+      - in: query
+        name: created_resources
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: finished_at
+        schema:
+          type: string
+          format: date-time
+          nullable: true
+        description: ISO 8601 formatted dates are supported
+      - in: query
+        name: finished_at__gt
+        schema:
+          type: string
+          format: date-time
+          nullable: true
+        description: Filter results where finished_at is greater than value
+      - in: query
+        name: finished_at__gte
+        schema:
+          type: string
+          format: date-time
+          nullable: true
+        description: Filter results where finished_at is greater than or equal to
+          value
+      - in: query
+        name: finished_at__lt
+        schema:
+          type: string
+          format: date-time
+          nullable: true
+        description: Filter results where finished_at is less than value
+      - in: query
+        name: finished_at__lte
+        schema:
+          type: string
+          format: date-time
+          nullable: true
+        description: Filter results where finished_at is less than or equal to value
+      - in: query
+        name: finished_at__range
+        schema:
+          type: array
+          items:
+            type: string
+            format: date-time
+            nullable: true
+        description: Filter results where finished_at is between two comma separated
+          values
+        explode: false
+        style: form
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: name__contains
+        schema:
+          type: string
+        description: Filter results where name contains value
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: parent_task
+        schema:
+          type: string
+          format: uuid
+          nullable: true
+        description: Foreign Key referenced by HREF
+      - in: query
+        name: reserved_resources_record
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: started_at
+        schema:
+          type: string
+          format: date-time
+          nullable: true
+        description: ISO 8601 formatted dates are supported
+      - in: query
+        name: started_at__gt
+        schema:
+          type: string
+          format: date-time
+          nullable: true
+        description: Filter results where started_at is greater than value
+      - in: query
+        name: started_at__gte
+        schema:
+          type: string
+          format: date-time
+          nullable: true
+        description: Filter results where started_at is greater than or equal to value
+      - in: query
+        name: started_at__lt
+        schema:
+          type: string
+          format: date-time
+          nullable: true
+        description: Filter results where started_at is less than value
+      - in: query
+        name: started_at__lte
+        schema:
+          type: string
+          format: date-time
+          nullable: true
+        description: Filter results where started_at is less than or equal to value
+      - in: query
+        name: started_at__range
+        schema:
+          type: array
+          items:
+            type: string
+            format: date-time
+            nullable: true
+        description: Filter results where started_at is between two comma separated
+          values
+        explode: false
+        style: form
+      - in: query
+        name: state
+        schema:
+          type: string
+          enum:
+          - canceled
+          - completed
+          - failed
+          - running
+          - skipped
+          - waiting
+      - in: query
+        name: state__in
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - canceled
+            - completed
+            - failed
+            - running
+            - skipped
+            - waiting
+        description: Filter results where state is in a comma-separated list of values
+        explode: false
+        style: form
+      - in: query
+        name: task_group
+        schema:
+          type: string
+          format: uuid
+          nullable: true
+        description: Foreign Key referenced by HREF
+      - in: query
+        name: worker
+        schema:
+          type: string
+          format: uuid
+          nullable: true
+        description: Foreign Key referenced by HREF
+      - in: query
+        name: worker__in
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+            nullable: true
+        description: Filter results where worker is in a comma-separated list of values
+        explode: false
+        style: form
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: A list of fields to include in the response.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: A list of fields to exclude from the response.
+      tags:
+      - Tasks
+      security:
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTaskSummaryResponseList'
+          description: ''
+components:
+  schemas:
+    ArtifactRefResponse:
+      type: object
+      description: A serializer for an Artifact reference.
+      properties:
+        filename:
+          type: string
+        sha256:
+          type: string
+        size:
+          type: integer
+      required:
+      - filename
+      - sha256
+      - size
+    CollectionMetadataResponse:
+      type: object
+      description: A serializer for a CollectionVersion metadata.
+      properties:
+        authors:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        contents:
+          type: object
+          readOnly: true
+        dependencies:
+          type: object
+          readOnly: true
+        description:
+          type: string
+          readOnly: true
+        documentation:
+          type: string
+          readOnly: true
+        homepage:
+          type: string
+          readOnly: true
+        issues:
+          type: string
+          readOnly: true
+        license:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        repository:
+          type: string
+          readOnly: true
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+      - tags
+    CollectionNamespaceResponse:
+      type: object
+      description: A serializer for a Collection Version namespace field.
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    CollectionUploadWithDownloadUrl:
+      type: object
+      description: A serializer for the Collection One Shot Upload API.
+      properties:
+        file:
+          type: string
+          format: binary
+        sha256:
+          type: string
+      required:
+      - file
+    CollectionUploadWithDownloadUrlResponse:
+      type: object
+      description: A serializer for the Collection One Shot Upload API.
+      properties:
+        file:
+          type: string
+        sha256:
+          type: string
+      required:
+      - file
+    CollectionVersionDocsResponse:
+      type: object
+      description: A serializer to display the docs_blob of a CollectionVersion.
+      properties:
+        docs_blob:
+          type: object
+      required:
+      - docs_blob
+    CollectionVersionWithDownloadUrlResponse:
+      type: object
+      description: A serializer for a CollectionVersion.
+      properties:
+        version:
+          type: string
+          readOnly: true
+        href:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        requires_ansible:
+          type: string
+          nullable: true
+          maxLength: 255
+        artifact:
+          allOf:
+          - $ref: '#/components/schemas/ArtifactRefResponse'
+          readOnly: true
+        collection:
+          allOf:
+          - $ref: '#/components/schemas/CollectionWithFixedHrefsRefResponse'
+          readOnly: true
+        download_url:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        namespace:
+          allOf:
+          - $ref: '#/components/schemas/CollectionNamespaceResponse'
+          readOnly: true
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/CollectionMetadataResponse'
+          readOnly: true
+        manifest:
+          type: object
+          readOnly: true
+          description: A JSON field holding MANIFEST.json data.
+        files:
+          type: object
+          readOnly: true
+          description: A JSON field holding FILES.json data.
+      required:
+      - created_at
+      - updated_at
+    CollectionWithFixedHrefsRefResponse:
+      type: object
+      description: A serializer for a Collection reference.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        href:
+          type: string
+          readOnly: true
+      required:
+      - id
+      - name
+    CollectionWithFixedHrefsResponse:
+      type: object
+      description: A serializer for a Collection.
+      properties:
+        href:
+          type: string
+          readOnly: true
+        namespace:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        deprecated:
+          type: boolean
+          readOnly: true
+        versions_url:
+          type: string
+          readOnly: true
+        highest_version:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    Namespace:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 64
+        company:
+          type: string
+          maxLength: 64
+        email:
+          type: string
+          maxLength: 256
+        avatar_url:
+          type: string
+          format: uri
+          maxLength: 256
+        description:
+          type: string
+          maxLength: 256
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/NamespaceLink'
+        groups:
+          type: string
+        resources:
+          type: string
+      required:
+      - groups
+      - name
+    NamespaceLink:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 32
+        url:
+          type: string
+          maxLength: 256
+      required:
+      - name
+      - url
+    NamespaceLinkResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 32
+        url:
+          type: string
+          maxLength: 256
+      required:
+      - name
+      - url
+    NamespaceResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 64
+        company:
+          type: string
+          maxLength: 64
+        email:
+          type: string
+          maxLength: 256
+        avatar_url:
+          type: string
+          format: uri
+          maxLength: 256
+        description:
+          type: string
+          maxLength: 256
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/NamespaceLinkResponse'
+        groups:
+          type: string
+        resources:
+          type: string
+      required:
+      - groups
+      - name
+    NamespaceSummaryResponse:
+      type: object
+      description: |-
+        NamespaceSerializer but without 'links' or 'resources'.
+
+        For use in _ui/collection detail views.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        company:
+          type: string
+          maxLength: 64
+        email:
+          type: string
+          maxLength: 256
+        avatar_url:
+          type: string
+          format: uri
+          maxLength: 256
+        description:
+          type: string
+          maxLength: 256
+        groups:
+          type: string
+      required:
+      - groups
+    PaginatedCollectionVersionWithDownloadUrlResponseList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CollectionVersionWithDownloadUrlResponse'
+    PaginatedCollectionWithFixedHrefsResponseList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CollectionWithFixedHrefsResponse'
+    PaginatedNamespaceSummaryResponseList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/NamespaceSummaryResponse'
+    PaginatedTaskSummaryResponseList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskSummaryResponse'
+    PatchedCollectionWithFixedHrefs:
+      type: object
+      description: A serializer for a Collection.
+      properties: {}
+    TaskSummaryResponse:
+      type: object
+      description: |-
+        TaskSerializer but without detail fields.
+
+        For use in /tasks/<str:pk>/ detail views.
+      properties:
+        pulp_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        repository:
+          type: string
+          nullable: true
+          readOnly: true
+        state:
+          type: string
+        started_at:
+          type: string
+          format: date-time
+        finished_at:
+          type: string
+          format: date-time
+        href:
+          type: string
+          readOnly: true
+      required:
+      - finished_at
+      - name
+      - pulp_id
+      - started_at
+      - state
+    ansible.CollectionRemote:
+      type: object
+      description: A serializer for Collection Remotes.
+      properties:
+        url:
+          type: string
+          description: The URL of an external content source.
+        auth_url:
+          type: string
+          nullable: true
+          description: The URL to receive a session token from, e.g. used with Automation
+            Hub.
+          maxLength: 255
+        token:
+          type: string
+          writeOnly: true
+          nullable: true
+          maxLength: 2000
+        policy:
+          allOf:
+          - $ref: '#/components/schemas/PolicyDb6Enum'
+          default: immediate
+          description: The policy to use when downloading content.
+        requirements_file:
+          type: string
+          nullable: true
+          description: The string version of Collection requirements yaml.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        username:
+          type: string
+          nullable: true
+          description: Remote user.
+        password:
+          type: string
+          writeOnly: true
+          nullable: true
+          description: Remote password.
+        tls_validation:
+          type: boolean
+          description: If True, TLS peer validation must be performed.
+        client_key:
+          type: string
+          writeOnly: true
+          nullable: true
+          description: A PEM encoded private key used for authentication.
+        client_cert:
+          type: string
+          nullable: true
+          description: A PEM encoded client certificate used for authentication.
+        ca_cert:
+          type: string
+          nullable: true
+          description: A PEM encoded CA certificate used to validate the server certificate
+            presented by the remote server.
+        download_concurrency:
+          type: integer
+          minimum: 1
+          description: Total number of simultaneous connections.
+        proxy_url:
+          type: string
+          nullable: true
+          description: 'The proxy URL. Format: scheme://host:port'
+        proxy_username:
+          type: string
+          nullable: true
+          description: User for proxy authentication.
+        proxy_password:
+          type: string
+          writeOnly: true
+          nullable: true
+          description: Password for proxy authentication.
+        rate_limit:
+          type: integer
+          nullable: true
+          description: Limits total download rate in requests per second
+      required:
+      - url
+    ansible.CollectionRemoteResponse:
+      type: object
+      description: A serializer for Collection Remotes.
+      properties:
+        pk:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        url:
+          type: string
+          description: The URL of an external content source.
+        auth_url:
+          type: string
+          nullable: true
+          description: The URL to receive a session token from, e.g. used with Automation
+            Hub.
+          maxLength: 255
+        policy:
+          allOf:
+          - $ref: '#/components/schemas/PolicyDb6Enum'
+          default: immediate
+          description: The policy to use when downloading content.
+        requirements_file:
+          type: string
+          nullable: true
+          description: The string version of Collection requirements yaml.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        username:
+          type: string
+          nullable: true
+          description: Remote user.
+        tls_validation:
+          type: boolean
+          description: If True, TLS peer validation must be performed.
+        client_cert:
+          type: string
+          nullable: true
+          description: A PEM encoded client certificate used for authentication.
+        ca_cert:
+          type: string
+          nullable: true
+          description: A PEM encoded CA certificate used to validate the server certificate
+            presented by the remote server.
+        last_sync_task:
+          type: string
+          readOnly: true
+        repositories:
+          type: string
+          readOnly: true
+        pulp_href:
+          type: string
+          format: uri
+          readOnly: true
+        download_concurrency:
+          type: integer
+          minimum: 1
+          description: Total number of simultaneous connections.
+        proxy_url:
+          type: string
+          nullable: true
+          description: 'The proxy URL. Format: scheme://host:port'
+        proxy_username:
+          type: string
+          nullable: true
+          description: User for proxy authentication.
+        write_only_fields:
+          type: string
+          readOnly: true
+        rate_limit:
+          type: integer
+          nullable: true
+          description: Limits total download rate in requests per second
+      required:
+      - url
+    PolicyDb6Enum:
+      enum:
+      - immediate
+      - When syncing, download all metadata and content now.
+      type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: Session
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
+servers:
+- url: http://localhost:5001/
