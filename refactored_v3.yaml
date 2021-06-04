@@ -1287,6 +1287,7 @@ paths:
           description: Moved Permanently
       operationId: get-imports
       description: Redirect or proxy the request to /plugin/ansible/imports/
+      deprecated: true
 components:
   schemas:
     ApiRootResponse:
