@@ -18,7 +18,7 @@ info:
     ansible: 0.7.1
     galaxy: 4.4.0dev
 paths:
-  /:
+  /v3/:
     summary: API root. Lists out the paths that are available
     get:
       responses:
@@ -30,7 +30,7 @@ paths:
                 $ref: '#/components/schemas/ApiRootResponse'
       tags:
         - API Root
-  /plugin:
+  /v3/plugin:
     summary: Lists child URLS
     get:
       responses:
@@ -42,7 +42,7 @@ paths:
                 $ref: '#/components/schemas/ApiRootResponse'
       tags:
         - Plugins
-  /plugin/ansible:
+  /v3/plugin/ansible:
     summary: Lists child URLS
     get:
       responses:
@@ -54,7 +54,7 @@ paths:
                 $ref: '#/components/schemas/ApiRootResponse'
       tags:
         - Pulp Ansible
-  /plugin/ansible/search:
+  /v3/plugin/ansible/search:
     summary: Lists child URLS
     get:
       responses:
@@ -66,7 +66,7 @@ paths:
                 $ref: '#/components/schemas/ApiRootResponse'
       tags:
         - Pulp Ansible
-  /plugin/ansible/search/collection-versions:
+  /v3/plugin/ansible/search/collection-versions:
     summary: Search collection versions across all repos.
     get:
       summary: ''
@@ -100,7 +100,7 @@ paths:
       description: 'By default, only repos that are labelled with content=public are shown.'
       tags:
         - Pulp Ansible
-  /plugin/ansible/distributions/:
+  /v3/plugin/ansible/distributions/:
     summary: pulp ansible distributions api
     get:
       summary: ''
@@ -111,7 +111,7 @@ paths:
       description: Same as current _ui/v1/distributions/ endpoint
       tags:
         - Pulp Ansible
-  /plugin/ansible/collection-remotes/:
+  /v3/plugin/ansible/collection-remotes/:
     summary: pulp ansible collection remotes api
     get:
       summary: ''
@@ -122,7 +122,7 @@ paths:
       description: Same as current _ui/v1/remotes/ endpoint.
       tags:
         - Pulp Ansible
-  '/plugin/ansible/collections/{distribution}/artifacts/collections/':
+  '/v3/plugin/ansible/collections/{base_path}/artifacts/collections/':
     post:
       operationId: api_automation_hub_v3_artifacts_collections_create
       description: Dispatch a Collection creation task.
@@ -147,7 +147,7 @@ paths:
           description: ''
       tags:
         - Pulp Ansible
-  '/plugin/ansible/collections/{distribution}/artifacts/collections/{path}/{filename}':
+  '/v3/plugin/ansible/collections/{base_path}/artifacts/collections/{path}/{filename}':
     get:
       operationId: api_automation_hub_v3_artifacts_collections_read
       description: ''
@@ -180,7 +180,7 @@ paths:
           description: No response body
       tags:
         - Pulp Ansible
-  '/plugin/ansible/collections/{distribution}/index/':
+  '/v3/plugin/ansible/collections/{base_path}/index/':
     get:
       operationId: api_automation_hub_v3_collections_list
       description: ViewSet for Collections.
@@ -231,7 +231,7 @@ paths:
           description: ''
       tags:
         - Pulp Ansible
-  '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/':
+  '/v3/plugin/ansible/collections/{base_path}/index/{namespace}/{name}/':
     get:
       operationId: api_automation_hub_v3_collections_read
       description: ViewSet for Collections.
@@ -306,7 +306,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CollectionWithFixedHrefsResponse'
           description: ''
-  '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/':
+  '/v3/plugin/ansible/collections/{base_path}/index/{namespace}/{name}/versions/':
     get:
       operationId: api_automation_hub_v3_collections_versions_list
       description: Returns paginated CollectionVersions list.
@@ -396,7 +396,7 @@ paths:
           description: ''
       tags:
         - Pulp Ansible
-  '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/{version}/':
+  '/v3/plugin/ansible/collections/{base_path}/index/{namespace}/{name}/versions/{version}/':
     get:
       operationId: api_automation_hub_v3_collections_versions_read
       description: Returns a CollectionVersion object.
@@ -438,7 +438,7 @@ paths:
           description: ''
       tags:
         - Pulp Ansible
-  '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/{version}/docs-blob/':
+  '/v3/plugin/ansible/collections/{base_path}/index/{namespace}/{name}/versions/{version}/docs-blob/':
     get:
       operationId: api_automation_hub_v3_collections_versions_docs_blob_read
       description: Returns a CollectionVersion object.
@@ -480,7 +480,7 @@ paths:
           description: ''
       tags:
         - Pulp Ansible
-  '/plugin/ansible/collections/{distribution}/index/{namespace}/{name}/versions/{version}/move/{source_path}/{dest_path}/':
+  '/v3/plugin/ansible/collections/{base_path}/index/{namespace}/{name}/versions/{version}/move/{source_path}/{dest_path}/':
     post:
       operationId: api_automation_hub_v3_collections_versions_move_move_content
       description: |-
@@ -522,7 +522,7 @@ paths:
           description: No response body
       tags:
         - Pulp Ansible
-  /tasks/:
+  /v3/tasks/:
     get:
       operationId: tasks_list
       description: |-
@@ -762,7 +762,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedTaskSummaryResponseList'
           description: ''
-  '/plugin/ansible/collections/{distribution}/all':
+  '/plugin/ansible/collections/{base_path}/all':
     summary: Repository sync metadata
     get:
       summary: ''
@@ -773,7 +773,7 @@ paths:
       description: 'Same as Same as current /content/{distro}/v3/collections/all/ endpoint.'
       tags:
         - Pulp Ansible
-  /plugin/ansible/namespaces:
+  /v3/plugin/ansible/namespaces:
     summary: List ansible namespaces
     get:
       summary: ''
@@ -931,7 +931,7 @@ paths:
       description: List of group IDs to remove from the object.
       tags:
         - Pulp Ansible
-  /plugin/ansible/imports:
+  /v3/plugin/ansible/imports:
     summary: List collection imports
     get:
       summary: ''
@@ -942,7 +942,7 @@ paths:
       description: Same as current v3/imports/collections/ endpoint.
       tags:
         - Pulp Ansible
-  /plugin/execution-environments:
+  /v3/plugin/execution-environments:
     summary: List child URLS
     get:
       responses:
@@ -954,7 +954,7 @@ paths:
                 $ref: '#/components/schemas/ApiRootResponse'
       tags:
         - Pulp Container
-  /plugin/execution-environments/search:
+  /v3/plugin/execution-environments/search:
     summary: Seach execution environments
     get:
       summary: ''
@@ -965,9 +965,9 @@ paths:
       description: TBD. This will include the ability to search EEs based on EE metadata.
       tags:
         - Pulp Container
-  /plugin/execution-environments/registries:
+  /v3/plugin/execution-environments/registries:
     summary: List remote registries
-  /plugin/execution-environments/repositories:
+  /v3/plugin/execution-environments/repositories:
     summary: List of container repositories
     get:
       summary: ''
@@ -978,7 +978,7 @@ paths:
       description: Same as current /_ui/v1/execution-environments/repositories/ endpoint.
       tags:
         - Pulp Container
-  '/plugin/execution-environments/repositories/{base_path}/':
+  '/v3/plugin/execution-environments/repositories/{base_path}/':
     summary: Container repository details
     get:
       summary: ''
@@ -989,7 +989,7 @@ paths:
       description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path} endpoint.'
       tags:
         - Pulp Container
-  '/plugin/execution-environments/repositories/{base_path}/_content/history':
+  '/v3/plugin/execution-environments/repositories/{base_path}/_content/history':
     summary: Container repository history
     get:
       summary: ''
@@ -1000,7 +1000,7 @@ paths:
       description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/history endpoint.'
       tags:
         - Pulp Container
-  '/plugin/execution-environments/repositories/{base_path}/_content/images':
+  '/v3/plugin/execution-environments/repositories/{base_path}/_content/images':
     summary: List of images in a repository
     get:
       summary: ''
@@ -1011,7 +1011,7 @@ paths:
       description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/images endpoint.'
       tags:
         - Pulp Container
-  '/plugin/execution-environments/repositories/{base_path}/_content/images/{ref}':
+  '/v3/plugin/execution-environments/repositories/{base_path}/_content/images/{ref}':
     summary: Container details for image manifest
     get:
       summary: ''
@@ -1022,7 +1022,7 @@ paths:
       description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/images/{ref} endpoint.'
       tags:
         - Pulp Container
-  '/plugin/execution-environments/repositories/{base_path}/_content/readme':
+  '/v3/plugin/execution-environments/repositories/{base_path}/_content/readme':
     summary: Repository readme
     get:
       summary: ''
@@ -1044,7 +1044,7 @@ paths:
       description: Same as current _ui/v1/execution-environments/namespaces/ endpoint.
       tags:
         - Pulp Container
-  '/plugin/execution-environments/namespaces/{name}/users':
+  '/v3/plugin/execution-environments/namespaces/{name}/users':
     summary: List of container namespace users
     get:
       summary: ''
@@ -1088,7 +1088,7 @@ paths:
       description: List of user IDs to remove from the object.
       tags:
         - Pulp Container
-  '/plugin/execution-environments/namespaces/{name}/groups':
+  '/v3/plugin/execution-environments/namespaces/{name}/groups':
     summary: List of container namespace groups
     get:
       summary: ''
@@ -1132,7 +1132,7 @@ paths:
       description: List of group IDs to remove from the object.
       tags:
         - Pulp Container
-  /auth:
+  /v3/auth:
     summary: List child URLS
     get:
       responses:
@@ -1144,7 +1144,7 @@ paths:
                 $ref: '#/components/schemas/ApiRootResponse'
       tags:
         - Authentication
-  /auth/me:
+  /v3/auth/me:
     summary: Return information about the current user
     get:
       summary: ''
@@ -1155,7 +1155,7 @@ paths:
       description: Same as current _ui/v1/me/ endpoint.
       tags:
         - Authentication
-  /auth/login:
+  /v3/auth/login:
     summary: Login
     get:
       summary: ''
@@ -1166,7 +1166,7 @@ paths:
       description: Same as current _ui/v1/auth/login/ endpoint
       tags:
         - Authentication
-  /auth/logout:
+  /v3/auth/logout:
     summary: Logout
     get:
       summary: ''
@@ -1177,7 +1177,7 @@ paths:
       description: Same as current _ui/v1/auth/logout/ endpoint
       tags:
         - Authentication
-  /auth/token:
+  /v3/auth/token:
     summary: Get a token for the current user
     get:
       summary: ''
@@ -1212,7 +1212,7 @@ paths:
       responses:
         '204':
           description: No response body
-  /configuration:
+  /v3/configuration:
     summary: 'return the current app configuration, including feature flags, default upload repo and default download repo'
     get:
       summary: ''
@@ -1226,7 +1226,7 @@ paths:
                 $ref: '#/components/schemas/AppConfiguration'
       tags:
         - App Configuration
-  /groups:
+  /v3/groups:
     summary: current groups api
     get:
       summary: ''
@@ -1237,7 +1237,7 @@ paths:
       description: Same as current _ui/v1/groups/ endpoint
       tags:
         - Groups
-  /users:
+  /v3/users:
     summary: current users api
     get:
       summary: ''
@@ -1248,7 +1248,7 @@ paths:
       description: Same as current _ui/v1/users/ endpoint.
       tags:
         - Users
-  /collections:
+  /v3/collections:
     get:
       summary: Get Collections
       tags: []
@@ -1258,7 +1258,7 @@ paths:
       operationId: get-collections
       description: Redirect or proxy the request to /plugin/ansible/collections/<default_download_repo>/index/
       deprecated: true
-  /artifacts:
+  /v3/artifacts:
     get:
       summary: Get collection artifacts
       tags: []
@@ -1268,7 +1268,7 @@ paths:
       operationId: get-artifacts
       description: Redirect or proxy the request to /plugin/ansible/collections/<default_upload_repo>/artifacts/
       deprecated: true
-  /namespaces:
+  /v3/namespaces:
     get:
       summary: Get collection namespaces
       tags: []
@@ -1278,7 +1278,7 @@ paths:
       operationId: get-namespaces
       description: Redirect or proxy the request to /plugin/ansible/namespaces/
       deprecated: true
-  /imports:
+  /v3/imports:
     get:
       summary: Get collection imports
       tags: []
