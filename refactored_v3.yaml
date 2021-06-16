@@ -122,7 +122,7 @@ paths:
       description: Same as current _ui/v1/remotes/ endpoint.
       tags:
         - Pulp Ansible
-  '/v3/plugin/ansible/collections/{base_path}/artifacts/collections/':
+  '/v3/plugin/ansible/collections/{distribution_base_path}/artifacts/collections/':
     post:
       operationId: api_automation_hub_v3_artifacts_collections_create
       description: Dispatch a Collection creation task.
@@ -147,7 +147,7 @@ paths:
           description: ''
       tags:
         - Pulp Ansible
-  '/v3/plugin/ansible/collections/{base_path}/artifacts/collections/{path}/{filename}':
+  '/v3/plugin/ansible/collections/{distribution_base_path}/artifacts/collections/{path}/{filename}':
     get:
       operationId: api_automation_hub_v3_artifacts_collections_read
       description: ''
@@ -180,7 +180,7 @@ paths:
           description: No response body
       tags:
         - Pulp Ansible
-  '/v3/plugin/ansible/collections/{base_path}/index/':
+  '/v3/plugin/ansible/collections/{distribution_base_path}/index/':
     get:
       operationId: api_automation_hub_v3_collections_list
       description: ViewSet for Collections.
@@ -231,7 +231,7 @@ paths:
           description: ''
       tags:
         - Pulp Ansible
-  '/v3/plugin/ansible/collections/{base_path}/index/{namespace}/{name}/':
+  '/v3/plugin/ansible/collections/{distribution_base_path}/index/{namespace}/{name}/':
     get:
       operationId: api_automation_hub_v3_collections_read
       description: ViewSet for Collections.
@@ -306,7 +306,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CollectionWithFixedHrefsResponse'
           description: ''
-  '/v3/plugin/ansible/collections/{base_path}/index/{namespace}/{name}/versions/':
+  '/v3/plugin/ansible/collections/{distribution_base_path}/index/{namespace}/{name}/versions/':
     get:
       operationId: api_automation_hub_v3_collections_versions_list
       description: Returns paginated CollectionVersions list.
@@ -396,7 +396,7 @@ paths:
           description: ''
       tags:
         - Pulp Ansible
-  '/v3/plugin/ansible/collections/{base_path}/index/{namespace}/{name}/versions/{version}/':
+  '/v3/plugin/ansible/collections/{distribution_base_path}/index/{namespace}/{name}/versions/{version}/':
     get:
       operationId: api_automation_hub_v3_collections_versions_read
       description: Returns a CollectionVersion object.
@@ -438,7 +438,7 @@ paths:
           description: ''
       tags:
         - Pulp Ansible
-  '/v3/plugin/ansible/collections/{base_path}/index/{namespace}/{name}/versions/{version}/docs-blob/':
+  '/v3/plugin/ansible/collections/{distribution_base_path}/index/{namespace}/{name}/versions/{version}/docs-blob/':
     get:
       operationId: api_automation_hub_v3_collections_versions_docs_blob_read
       description: Returns a CollectionVersion object.
@@ -480,7 +480,7 @@ paths:
           description: ''
       tags:
         - Pulp Ansible
-  '/v3/plugin/ansible/collections/{base_path}/index/{namespace}/{name}/versions/{version}/move/{source_path}/{dest_path}/':
+  '/v3/plugin/ansible/collections/{distribution_base_path}/index/{namespace}/{name}/versions/{version}/move/{source_path}/{dest_path}/':
     post:
       operationId: api_automation_hub_v3_collections_versions_move_move_content
       description: |-
@@ -762,7 +762,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedTaskSummaryResponseList'
           description: ''
-  '/plugin/ansible/collections/{base_path}/all':
+  '/plugin/ansible/collections/{distribution_base_path}/all':
     summary: Repository sync metadata
     get:
       summary: ''
@@ -978,7 +978,7 @@ paths:
       description: Same as current /_ui/v1/execution-environments/repositories/ endpoint.
       tags:
         - Pulp Container
-  '/v3/plugin/execution-environments/repositories/{base_path}/':
+  '/v3/plugin/execution-environments/repositories/{distribution_base_path}/':
     summary: Container repository details
     get:
       summary: ''
@@ -986,10 +986,10 @@ paths:
       responses:
         '200':
           description: OK
-      description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path} endpoint.'
+      description: 'Same as current /_ui/v1/execution-environments/repositories/{distribution_base_path} endpoint.'
       tags:
         - Pulp Container
-  '/v3/plugin/execution-environments/repositories/{base_path}/_content/history':
+  '/v3/plugin/execution-environments/repositories/{distribution_base_path}/_content/history':
     summary: Container repository history
     get:
       summary: ''
@@ -997,10 +997,10 @@ paths:
       responses:
         '200':
           description: OK
-      description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/history endpoint.'
+      description: 'Same as current /_ui/v1/execution-environments/repositories/{distribution_base_path}/_content/history endpoint.'
       tags:
         - Pulp Container
-  '/v3/plugin/execution-environments/repositories/{base_path}/_content/images':
+  '/v3/plugin/execution-environments/repositories/{distribution_base_path}/_content/images':
     summary: List of images in a repository
     get:
       summary: ''
@@ -1008,10 +1008,10 @@ paths:
       responses:
         '200':
           description: OK
-      description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/images endpoint.'
+      description: 'Same as current /_ui/v1/execution-environments/repositories/{distribution_base_path}/_content/images endpoint.'
       tags:
         - Pulp Container
-  '/v3/plugin/execution-environments/repositories/{base_path}/_content/images/{ref}':
+  '/v3/plugin/execution-environments/repositories/{distribution_base_path}/_content/images/{ref}':
     summary: Container details for image manifest
     get:
       summary: ''
@@ -1019,10 +1019,10 @@ paths:
       responses:
         '200':
           description: OK
-      description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/images/{ref} endpoint.'
+      description: 'Same as current /_ui/v1/execution-environments/repositories/{distribution_base_path}/_content/images/{ref} endpoint.'
       tags:
         - Pulp Container
-  '/v3/plugin/execution-environments/repositories/{base_path}/_content/readme':
+  '/v3/plugin/execution-environments/repositories/{distribution_base_path}/_content/readme':
     summary: Repository readme
     get:
       summary: ''
@@ -1030,7 +1030,7 @@ paths:
       responses:
         '200':
           description: OK
-      description: 'Same as current /_ui/v1/execution-environments/repositories/{base_path}/_content/readme endpoint.'
+      description: 'Same as current /_ui/v1/execution-environments/repositories/{distribution_base_path}/_content/readme endpoint.'
       tags:
         - Pulp Container
   /plugin/execution-environments/namespaces:
