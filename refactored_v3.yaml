@@ -108,20 +108,80 @@ paths:
       responses:
         '200':
           description: OK
-      description: Same as current _ui/v1/distributions/ endpoint
+      description: ''
       tags:
         - Pulp Ansible
-  /v3/plugin/ansible/collection-remotes/:
-    summary: pulp ansible collection remotes api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DistributionListResponse'
+  '/v3/plugin/ansible/distribitions/{base_path}/':
+    parameters:
+      - schema:
+          type: string
+        name: base_path
+        in: path
+        required: true
     get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-v3-plugin-ansible-distribitions-base_path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DistributionResponseObject'
+  '/v3/plugin/ansible/distribitions/{base_path}/sync/':
+    parameters:
+      - schema:
+          type: string
+        name: base_path
+        in: path
+        required: true
+    post:
       summary: ''
-      operationId: get-plugin-ansible-collection-remotes
+      operationId: post-v3-plugin-ansible-distribitions-base_path-sync
       responses:
         '200':
           description: OK
-      description: Same as current _ui/v1/remotes/ endpoint.
-      tags:
-        - Pulp Ansible
+      description: Perform a sync on the selected distribution.
+  '/v3/plugin/ansible/distribitions/{base_path}/sync/config':
+    parameters:
+      - schema:
+          type: string
+        name: base_path
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-v3-plugin-ansible-distribitions-base_path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DistributionResponseObject'
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AnsibleSyncConfig'
+      description: Get the sync config for a distribution.
+    put:
+      summary: ''
+      operationId: put-v3-plugin-ansible-distribitions-base_path-sync-config
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnsibleSyncConfig'
   '/v3/plugin/ansible/collections/{distribution_base_path}/artifacts/collections/':
     post:
       operationId: api_automation_hub_v3_artifacts_collections_create
@@ -2143,6 +2203,406 @@ components:
         - immediate
         - 'When syncing, download all metadata and content now.'
       type: string
+    DistributionListResponse:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          meta:
+            count: 5
+          links:
+            first: /api/automation-hub/_ui/v1/distributions/?limit=10&offset=0
+            previous: null
+            next: null
+            last: /api/automation-hub/_ui/v1/distributions/?limit=10&offset=0
+          data:
+            - pulp_id: 4a9ce59b-7ec8-46b9-89e2-e2c98db80869
+              name: community
+              base_path: community
+              repository:
+                name: community
+                description: Community content repository
+                pulp_id: dd6df97a-3427-4ceb-aad2-f59be71ce003
+                pulp_last_updated: '2021-07-01T13:51:14.594216Z'
+                content_count: 5
+            - pulp_id: 14057ff0-5941-4c5e-b73d-a7af834211d7
+              name: published
+              base_path: published
+              repository:
+                name: published
+                description: Certified content repository
+                pulp_id: a776035c-e150-4bef-a756-13f822e2d390
+                pulp_last_updated: '2021-06-24T15:12:12.125042Z'
+                content_count: 2
+            - pulp_id: 21cd579b-10b4-4963-9045-3e00a1cb823d
+              name: rejected
+              base_path: rejected
+              repository:
+                name: rejected
+                description: null
+                pulp_id: 76ee6acc-e353-4885-92d2-0f87d81a9ca7
+                pulp_last_updated: '2021-06-22T17:57:03.316313Z'
+                content_count: 0
+            - pulp_id: 22a0a78f-ec7c-4b1b-b680-c565ff6653b1
+              name: rh-certified
+              base_path: rh-certified
+              repository:
+                name: rh-certified
+                description: Red Hat certified content repository
+                pulp_id: 9391d22f-5b32-4be0-84f0-ccf4c87ab7a1
+                pulp_last_updated: '2021-06-22T17:57:03.988195Z'
+                content_count: 0
+            - pulp_id: d0c409c3-8664-4409-b4fd-7db13efcc2d7
+              name: staging
+              base_path: staging
+              repository:
+                name: staging
+                description: null
+                pulp_id: da0a3934-9054-486b-98c5-c6c06b88a0eb
+                pulp_last_updated: '2021-06-22T17:57:03.300736Z'
+                content_count: 0
+      properties:
+        meta:
+          type: object
+          required:
+            - count
+          properties:
+            count:
+              type: number
+        links:
+          type: object
+          required:
+            - first
+            - last
+          properties:
+            first:
+              type: string
+              minLength: 1
+            previous: {}
+            next: {}
+            last:
+              type: string
+              minLength: 1
+        data:
+          uniqueItems: true
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/DistributionResponseObject'
+      required:
+        - meta
+        - links
+        - data
+    AnsibleRemoteSummary:
+      title: AnsibleRemoteSummary
+      type: object
+      properties:
+        url:
+          type: string
+        pk:
+          type: string
+        name:
+          type: string
+    LastSyncSummary:
+      description: ''
+      type: object
+      properties:
+        task_id:
+          type: number
+        state:
+          type: string
+          minLength: 1
+        started_at:
+          type: string
+          minLength: 1
+        finished_at:
+          type: string
+          minLength: 1
+        error: {}
+      required:
+        - task_id
+        - state
+        - started_at
+        - finished_at
+      x-examples:
+        example-1:
+          task_id: 2
+          state: completed
+          started_at: '2021-07-01T13:51:10.777803Z'
+          finished_at: '2021-07-01T13:51:14.652157Z'
+          error: null
+    AnsibleRepositorySummary:
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        pulp_id:
+          type: string
+          minLength: 1
+        pulp_last_updated:
+          type: string
+          minLength: 1
+        content_count:
+          type: number
+      required:
+        - name
+        - description
+        - pulp_id
+        - pulp_last_updated
+        - content_count
+      x-examples:
+        example-1:
+          name: community
+          description: Community content repository
+          pulp_id: dd6df97a-3427-4ceb-aad2-f59be71ce003
+          pulp_last_updated: '2021-07-01T13:51:14.594216Z'
+          content_count: 5
+    DistributionResponseObject:
+      title: DistributionResponseObject
+      type: object
+      properties:
+        pulp_id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        base_path:
+          type: string
+          minLength: 1
+        related_fields:
+          type: object
+          properties:
+            repository:
+              $ref: '#/components/schemas/AnsibleRepositorySummary'
+            remote:
+              $ref: '#/components/schemas/AnsibleRemoteSummary'
+            last_sync_task:
+              $ref: '#/components/schemas/LastSyncSummary'
+      required:
+        - pulp_id
+        - name
+        - base_path
+    AnsibleSyncConfig:
+      description: ''
+      type: object
+      properties:
+        pk:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        url:
+          type: string
+          minLength: 1
+        auth_url: {}
+        policy:
+          type: string
+          minLength: 1
+        requirements_file:
+          type: string
+          minLength: 1
+        created_at:
+          type: string
+          minLength: 1
+        updated_at:
+          type: string
+          minLength: 1
+        username: {}
+        tls_validation:
+          type: boolean
+        client_cert: {}
+        ca_cert: {}
+        last_sync_task:
+          type: object
+          properties:
+            task_id:
+              type: number
+            state:
+              type: string
+              minLength: 1
+            started_at:
+              type: string
+              minLength: 1
+            finished_at:
+              type: string
+              minLength: 1
+            error: {}
+          required:
+            - task_id
+            - state
+            - started_at
+            - finished_at
+        repositories:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            required:
+              - name
+              - description
+              - next_version
+              - created_at
+              - updated_at
+            properties:
+              name:
+                type: string
+                minLength: 1
+              description:
+                type: string
+                minLength: 1
+              next_version:
+                type: number
+              distributions:
+                type: array
+                uniqueItems: true
+                minItems: 1
+                items:
+                  required:
+                    - name
+                    - base_path
+                    - created_at
+                    - updated_at
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                    base_path:
+                      type: string
+                      minLength: 1
+                    content_guard: {}
+                    created_at:
+                      type: string
+                      minLength: 1
+                    updated_at:
+                      type: string
+                      minLength: 1
+              created_at:
+                type: string
+                minLength: 1
+              updated_at:
+                type: string
+                minLength: 1
+              last_sync_task:
+                type: object
+                properties:
+                  task_id:
+                    type: number
+                  state:
+                    type: string
+                    minLength: 1
+                  started_at:
+                    type: string
+                    minLength: 1
+                  finished_at:
+                    type: string
+                    minLength: 1
+                  error: {}
+                required:
+                  - task_id
+                  - state
+                  - started_at
+                  - finished_at
+        pulp_href:
+          type: string
+          minLength: 1
+        download_concurrency:
+          type: number
+        proxy_url: {}
+        proxy_username: {}
+        write_only_fields:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            required:
+              - name
+              - is_set
+            properties:
+              name:
+                type: string
+                minLength: 1
+              is_set:
+                type: boolean
+        rate_limit:
+          type: number
+      required:
+        - pk
+        - name
+        - url
+        - policy
+        - requirements_file
+        - created_at
+        - updated_at
+        - tls_validation
+        - last_sync_task
+        - repositories
+        - pulp_href
+        - download_concurrency
+        - write_only_fields
+        - rate_limit
+      x-examples:
+        example-1:
+          pk: 12dd4b27-6e46-4f94-9b85-a2ec3f08619d
+          name: community
+          url: 'https://galaxy.ansible.com/api/'
+          auth_url: null
+          policy: immediate
+          requirements_file: |-
+            collections:
+              - name: dynatrace_innovationlab.dynatrace_collection
+          created_at: '2021-06-22T17:57:03.968789Z'
+          updated_at: '2021-07-01T13:51:08.697229Z'
+          username: null
+          tls_validation: true
+          client_cert: null
+          ca_cert: null
+          last_sync_task:
+            task_id: 2
+            state: completed
+            started_at: '2021-07-01T13:51:10.777803Z'
+            finished_at: '2021-07-01T13:51:14.652157Z'
+            error: null
+          repositories:
+            - name: community
+              description: Community content repository
+              next_version: 2
+              distributions:
+                - name: community
+                  base_path: community
+                  content_guard: null
+                  created_at: '2021-06-22T17:57:03.979335Z'
+                  updated_at: '2021-06-22T17:57:03.979350Z'
+              created_at: '2021-06-22T17:57:03.973344Z'
+              updated_at: '2021-07-01T13:51:14.594216Z'
+              last_sync_task:
+                task_id: 2
+                state: completed
+                started_at: '2021-07-01T13:51:10.777803Z'
+                finished_at: '2021-07-01T13:51:14.652157Z'
+                error: null
+          pulp_href: /pulp/api/v3/remotes/ansible/collection/12dd4b27-6e46-4f94-9b85-a2ec3f08619d/
+          download_concurrency: 10
+          proxy_url: null
+          proxy_username: null
+          write_only_fields:
+            - name: client_key
+              is_set: false
+            - name: token
+              is_set: false
+            - name: password
+              is_set: false
+            - name: client_key
+              is_set: false
+            - name: proxy_password
+              is_set: false
+          rate_limit: 8
   securitySchemes:
     basicAuth:
       type: http
